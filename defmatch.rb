@@ -26,7 +26,7 @@ module Defmatch
       self.send(:define_method,method) do |*args|
         self.class.instance_variable_get(:@defmatch_dispatch_info)[method].each do |hash|
           if hash[:test].call(*args)
-           return hash[:block].call(self,*args)
+           return self.instance_exec(*args,&hash[:block])
           end
         end
         throw "No function clause matching arguments" #This should be a real Exception
@@ -41,13 +41,15 @@ end
 class Monkey
   extend(Defmatch)
 
-  defmatch(:times,Fixnum) {|instance,num| num * 2 }
-  defmatch(:times,Array) {|instance,list| list.collect {|i| instance.times(i) } } #how do I refer to the instance method in this context?
-  defmatch(:times,lambda {|asdf| asdf == :asdf }) {|instance,asdf| puts asdf }
+  defmatch(:times,Fixnum) {|num| num * 2 }
+  defmatch(:times,Array) {|list| list.collect {|i| times(i) } } #how do I refer to the instance method in this context?
+  defmatch(:times,lambda {|asdf| asdf == :asdf }) {|asdf| puts asdf }
 end
 
 # defmatch(:times,Array) {|list| list.collect {|i| self.times(i) } }
 # defmatch(:times,Fixnum) {|num| num * 2 }
+# potential: defmatch(:times,:_some_instance_method?)
+# potential: defmatch(:times,"literal")
 # self.times(2) => 4
 # self.times([1,2,3,4]) => [2,4,6,8]
 x = Monkey.new

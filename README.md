@@ -35,8 +35,8 @@ So how would you write the same thing using Defmatch?
 class TestMe
   extend(Defmatch)
 
-  defmatch(:times,Fixnum) {|instance,num| num * 2 }
-  defmatch(:times,Array) {|instance,list| list.collect {|i| instance.times(i) } }
+  defmatch(:times,Fixnum) {|num| num * 2 }
+  defmatch(:times,Array) {|list| list.collect {|i| times(i) } }
 end
 
 x = TestMe.new
