@@ -45,7 +45,7 @@ x.times([1,2,3,4]) # -> [2,4,6,8]
 ```
 
 ## How does it work and how do I use it?
-Defmatch is written as a module and when it's used to extend a class it creates a ```defmatch``` class method. The ```defmatch``` method takes one required argument as the name of the method you're defining. The remaining arguments are the pattern to match on when the method you're calling that method. Those arguments can be classes, literals, or procedures (lambdas). It also takes a block which is the actual function body that will run when the pattern matches. Those with a java background think method overloading, but more powerful. Those with an erlang background will feel right at home. But here are some concrete examples.
+Defmatch is written as a module and when it's used to extend a class it creates a ```defmatch``` class method. The ```defmatch``` method takes one required argument as the name of the method you're defining. The remaining arguments are the pattern to match on when calling that method. Those arguments can be classes, literals, or procedures (lambdas). It also requires a block which is the actual function body that will run when the pattern matches. Those with a java background will find this similar to method overloading, but more powerful. Those with an erlang background will feel right at home. Here are some concrete examples.
 
 ```ruby
 class TestMe
