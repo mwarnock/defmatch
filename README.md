@@ -73,6 +73,7 @@ x.magic(:literally) # -> You get the idea
 x.magic(2,3)
 x.magic("banana")
 x.magic()
+x.magic("I","never","defined","this","to","match") # -> ArgumentError: No function clause matching arguments
 ```
 
 This can come in very handy, but remember that the order in which you define things matters. Lets say I define my magic function like this:
