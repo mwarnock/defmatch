@@ -13,7 +13,7 @@ module Defmatch
     lambda do |*args|
       test = true;
       param_test_pairs = args.zip(tests)
-      param_test_pairs.each {|pair| if pair[1].call(pair[0]) == false; test = false; break; end; }
+      param_test_pairs.each {|pair| if (pair[1].nil? or (pair[1].call(pair[0]) == false)); test = false; break; end; }
       return test
     end
   end
@@ -31,7 +31,7 @@ module Defmatch
            return self.instance_exec(*args,&hash[:block])
           end
         end
-        throw "No function clause matching arguments" #This should be a real Exception
+        raise ArgumentError, "No function clause matching arguments"
       end
     end
 

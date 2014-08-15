@@ -46,6 +46,10 @@ describe Defmatch do
       expect(instance.times("matchme")).to eq("matched literal matchme")
     end
 
+    it 'should throw an argument error when arguments that don\'t match anything are given' do
+      expect { instance.times("will","break","this") }.to raise_error(ArgumentError)
+    end
+
   end
 
 end
