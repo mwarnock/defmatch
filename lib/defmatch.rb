@@ -4,8 +4,10 @@ module Defmatch
     tests = args.collect do |arg|
       if arg.class == Proc
         arg
-      else
+      elsif arg.class == Class
         lambda {|param| param.class == arg }
+      else
+        lambda {|param| param == arg }
       end
     end
     lambda do |*args|
@@ -37,22 +39,3 @@ module Defmatch
 
 end
 
-# Need to turn this into legit test suite and this whole thing into a gem
-class Monkey
-  extend(Defmatch)
-
-  defmatch(:times,Fixnum) {|num| num * 2 }
-  defmatch(:times,Array) {|list| list.collect {|i| times(i) } } #how do I refer to the instance method in this context?
-  defmatch(:times,lambda {|asdf| asdf == :asdf }) {|asdf| puts asdf }
-end
-
-# defmatch(:times,Array) {|list| list.collect {|i| self.times(i) } }
-# defmatch(:times,Fixnum) {|num| num * 2 }
-# potential: defmatch(:times,:_some_instance_method?)
-# potential: defmatch(:times,"literal")
-# self.times(2) => 4
-# self.times([1,2,3,4]) => [2,4,6,8]
-x = Monkey.new
-x.times(4)
-x.times([1,2,3,4])
-x.times(:asdf)
