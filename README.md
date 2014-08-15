@@ -83,6 +83,8 @@ This can come in very handy, but remember that the order in which you define thi
 
 Even if I run ```x.magic(1)``` I will get ```2``` as the result. The second defmatch will never be matched because there is a more general match case above it. Order matters. Define your most specific matches first.
 
+If you want to create class methods (yes there are no true class methods in ruby, but it's a convient definition) you can use the ```defclassmatch``` method. It works just like ```defmatch``` but makes a class method instead.
+
 ## Roadmap
 
 * Add parameter deconstruction
