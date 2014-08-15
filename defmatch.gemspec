@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Defmatch::VERSION
   spec.authors       = ["Max Warnock"]
   spec.email         = ["mwarnock@analytical.info"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = %q{Defmatch provides a method for classes to define and dispatch methods off of pattern matching.}
+  spec.description   = %q{Switching between erlang and ruby a fair amount has me missing erlang's function definition features. Particularly dispatching based on pattern matching. Defmatch is my way of bringing some of that functionality into ruby.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
