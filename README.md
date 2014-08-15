@@ -85,6 +85,5 @@ Even if I run ```x.magic(1)``` I will get ```2``` as the result. The second defm
 
 ## Roadmap
 
-* Add defclassmatch for class methods
 * Add parameter deconstruction
 * Add it to the Kernel so it's available without having to include things. This will require ruby 2.0 and I'm not prepared to kill backwards compatability yet.
