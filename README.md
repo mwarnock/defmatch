@@ -61,6 +61,8 @@ class TestMe
   defmatch(:magic,Fixnum,Fixnum) {|a,b| "Found two numbers #{a}:#{b}" }
   # Run this function when there is a single argument that is equal to "banana" (not a great example as this could be done with a literal)
   defmatch(:magic,lambda {|arg| arg == "banana" }) {|arg| "I matched using a procedure that made sure \"banana\" == #{arg}" }
+  # Run this function with no arguments
+  defmatch(:magic) { "nifty" }
 end
 
 #Now you have an instance method called magic that dispatches what runs based on the patterns you defined and their associated block
@@ -70,6 +72,7 @@ x.magic([1,2,3]) # -> Matches the second
 x.magic(:literally) # -> You get the idea
 x.magic(2,3)
 x.magic("banana")
+x.magic()
 ```
 
 This can come in very handy, but remember that the order in which you define things matters. Lets say I define my magic function like this:
