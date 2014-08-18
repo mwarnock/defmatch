@@ -18,6 +18,38 @@ describe Defmatch do
     defclassmatch(:cscope) { self }
   end
 
+  class ATester < Tester
+    defmatch(:times,:not_in_super) { "not in super" }
+  end
+
+  class InheritedTesterBroken
+    extend(Defmatch)
+
+    defmatch(:times,Fixnum) {|num| num * 2 }
+
+    def inherited(subclass)
+      :do_nothing
+    end
+
+  end
+
+  class InheritedTesterWorkaround
+    extend(Defmatch)
+
+    defclassmatch(:times,Fixnum) {|num| num * 2 }
+
+    def inherited(subclass)
+      Defmatch.inherited(self,subclass)
+    end
+
+  end
+
+  class InheritedTesterBrokenA < InheritedTesterBroken
+  end
+
+  class InheritedTesterWorkaroundA < InheritedTesterWorkaround
+  end
+
   it 'should create methods' do
     expect(Tester).to respond_to(:defmatch)
     expect(Tester).to respond_to(:defclassmatch)
@@ -37,6 +69,20 @@ describe Defmatch do
 
   it '\'s blocks should have the proper scope' do
     expect(Tester.cscope).to equal(Tester)
+  end
+
+  it 'should allow for inheritance' do
+    expect(ATester.cscope).to equal(ATester)
+    x = Tester.new
+    y = ATester.new
+    expect(y.scope).to equal(y)
+    expect(y.times(:not_in_super)).to eq("not in super")
+    expect { x.times(:not_in_super) }.to raise_error(ArgumentError)
+  end
+
+  it 'should allow for inherited workaround' do
+    expect(InheritedTesterWorkaroundA.times(2)).to eq(4)
+    expect { InheritedTesterBrokenA.times(2) }.to raise_error(NoMethodError)
   end
 
   instance = Tester.new

@@ -89,7 +89,24 @@ Even if I run ```x.magic(1)``` I will get ```2``` as the result. The second defm
 
 If you want to create class methods (yes there are no true class methods in ruby, but it's a convient definition) you can use the ```defclassmatch``` method. It works just like ```defmatch``` but makes a class method instead.
 
+## A note about inheritance
+If you've defined a class you intend to inherit from and it uses Defmatch then be warned. Presently Defmatch defines an ```inherited``` method for your class when you extend it. So if you
+use this method yourself then you'll be overwriting Defmatch's and you'll get odd errors when trying to use the defmatch/defclassmatch defined methods in your subclass. The work around for this is to reference the Defmatch version of the inherited function in your own inherited function.
+
+```ruby
+class MySuperClass
+
+  def self.inherited(subklass)
+    Defmatch.inherited(self,subklass)
+  end
+
+end
+```
+
+It's not a great solution, but it will work until I come up with a better one.
+
 ## Roadmap
 
 * Add parameter deconstruction
+* Cleaner way to handle inheritance
 * Add it to the Kernel so it's available without having to include things. This will require ruby 2.0 and I'm not prepared to kill backwards compatability yet.

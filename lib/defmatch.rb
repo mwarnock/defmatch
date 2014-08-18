@@ -26,6 +26,19 @@ module Defmatch
     end
   end
 
+  def self.dispatch_clone(dispatch)
+    dispatch.keys.inject({}) {|nd,key| nd[key] = dispatch[key].clone; nd } if dispatch
+  end
+
+  def self.inherited(klass,subklass)
+    subklass.instance_variable_set(:@defmatch_dispatch_info,Defmatch.dispatch_clone(klass.instance_variable_get(:@defmatch_dispatch_info)))
+    subklass.instance_variable_set(:@defclassmatch_dispatch_info,Defmatch.dispatch_clone(klass.instance_variable_get(:@defclassmatch_dispatch_info)))
+  end
+
+  def inherited(subklass)
+    Defmatch.inherited(self,subklass)
+  end
+
   def defmatch(method,*args,&block)
     @defmatch_dispatch_info ||= {} # setup the methods in an instance variable
     @defmatch_dispatch_info[method] ||= [] # setup the ordered array for the method the first time
