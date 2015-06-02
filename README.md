@@ -10,7 +10,7 @@ times_two(I) when is_number(I) ->
 
 times_two(4). % Returns 8
 times_two([1,2,3,4]). % Returns [2,4,6,8]
-times_two("asdf"). % Throws a bad match (function clause) error
+times_two(<<"asdf">>). % Throws a bad match (function clause) error
 ```
 
 To do the same type of operation in ruby I'd have to write something like this:
