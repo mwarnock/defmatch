@@ -1,5 +1,7 @@
 # Defmatch
 
+[![Build Status](https://travis-ci.org/mwarnock/defmatch.svg?branch=master)](https://travis-ci.org/mwarnock/defmatch)
+
 Switching between erlang and ruby a fair amount has me missing erlang's function definition features. Particularly dispatching based on pattern matching. In erlang it's common to write a function that handles both a single item or a list of those items like this:
 
 ```erlang
